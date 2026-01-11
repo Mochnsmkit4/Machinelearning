@@ -6,308 +6,233 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-body {
-    background: linear-gradient(135deg, #f8fafc, #eef2ff);
-    min-height: 100vh;
-    color: #1e293b;
-    font-family: "Segoe UI", sans-serif;
-}
-
-.card {
-    background: #ffffff;
-    border-radius: 16px;
-    border: none;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-}
-
-.form-control,
-.form-select {
-    border-radius: 10px;
-    border: 1px solid #cbd5f5;
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 0.15rem rgba(99,102,241,0.25);
-}
-
-label {
-    font-weight: 600;
-}
-
-.result-box {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-    height: 100%;
-}
-
-.status-lulus {
-    color: #16a34a;
-    font-weight: 700;
-}
-
-.status-tidak {
-    color: #dc2626;
-    font-weight: 700;
-}
-
-.placeholder-box {
-    color: #64748b;
-    text-align: center;
-    padding-top: 90px;
-}
-
-.btn-success {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    border: none;
-    border-radius: 12px;
-    padding: 14px;
-    font-weight: 600;
-}
-
-.section-title {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #64748b;
-    margin-bottom: 10px;
-}
-
-.ai-card {
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 18px;
-    background: #f9fafb;
-}
-
-.ai-metric {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    font-size: 0.9rem;
-}
-
-.ai-metric span:first-child {
-    color: #64748b;
-}
-
-.ai-metric span:last-child {
-    font-weight: 600;
-}
-
-.prediction-main {
-    text-align: center;
-    padding: 20px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-}
-
-.prediction-main.fail {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-}
-
-.confidence-note {
-    font-size: 0.8rem;
-    color: #64748b;
-    text-align: center;
-    margin-top: 8px;
-}
-
-</style>
+<link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <body>
-<div class="container py-5">
 
-<h3 class="text-center mb-4">🎓 Prediksi Kelulusan Mahasiswa</h3>
+<div class="app-container">
 
-<div class="row g-4">
+<!-- ================= SIDEBAR ================= -->
+<div class="sidebar">
+    <h5 class="mb-3">📝 Input Data Mahasiswa</h5>
 
-<!-- FORM INPUT -->
-<div class="col-lg-6">
-<div class="card p-4 h-100">
-<h5 class="mb-3">📝 Input Data Mahasiswa</h5>
+    <form action="/predict" method="post" id="predictForm">
 
-<form action="/predict" method="post">
-<div class="row g-3">
+        <div class="mb-2">
+            <label>IPK</label>
+            <input type="number" step="0.01" min="0" max="4" name="ipk" class="form-control" required>
+        </div>
 
-<div class="col-md-6">
-<label>IPK</label>
-<input
-    type="number"
-    name="ipk"
-    class="form-control"
-    step="0.01"
-    min="0"
-    max="4"
-    placeholder="0.00 – 4.00"
-    required
-    oninput="if (this.value > 4) this.value = 4;"
->
+        <div class="mb-2">
+            <label>Mata Kuliah Tidak Lulus</label>
+            <input type="number" name="mk_tidak_lulus" class="form-control" required>
+        </div>
+
+        <div class="mb-2">
+            <label>Jumlah Cuti</label>
+            <input type="number" name="cuti" class="form-control" required>
+        </div>
+
+        <div class="mb-2">
+            <label>Pekerjaan</label>
+            <select name="pekerjaan" class="form-select" required>
+                <option value="">Pilih</option>
+                <option>Ya</option>
+                <option>Tidak</option>
+            </select>
+        </div>
+
+        <div class="mb-2">
+            <label>Jumlah Semester</label>
+            <input type="number" name="semester" class="form-control" required>
+        </div>
+
+        <div class="mb-2">
+            <label>IPS Rata-rata</label>
+            <input type="number" step="0.01" name="ips_rata" class="form-control" required>
+        </div>
+
+        <div class="mb-2">
+            <label>IPS Akhir</label>
+            <input type="number" step="0.01" name="ips_akhir" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>IPS Tren</label>
+            <input type="number" step="0.01" name="ips_tren" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Kehadiran</label>
+            <select name="kehadiran" class="form-select" required>
+                <option value="">Pilih</option>
+                <option>Tinggi</option>
+                <option>Sedang</option>
+                <option>Rendah</option>
+            </select>
+        </div>
+
+        <button class="btn btn-predict w-100">🔍 Prediksi</button>
+    </form>
 </div>
 
+<!-- ================= MAIN CONTENT ================= -->
+<div class="main-content">
 
-<div class="col-md-6">
-<label>MK Tidak Lulus</label>
-<input type="number" name="mk_tidak_lulus" class="form-control" required>
+<!-- HERO -->
+<div class="hero">
+    <h1>🎓 Prediksi Kelulusan Mahasiswa</h1>
+    <p>Sistem <strong>Machine Learning</strong> untuk membantu prediksi kelulusan.</p>
 </div>
-
-<div class="col-md-6">
-<label>Jumlah Cuti</label>
-<input type="number" name="cuti" class="form-control" required>
-</div>
-
-<div class="col-md-6">
-<label>Pekerjaan</label>
-<select name="pekerjaan" class="form-select" required>
-<option value="">Pilih</option>
-<option value="Ya">Ya</option>
-<option value="Tidak">Tidak</option>
-</select>
-</div>
-
-<div class="col-md-6">
-<label>Jumlah Semester</label>
-<input type="number" name="semester" class="form-control" required>
-</div>
-
-<div class="col-md-6">
-<label>IPS Rata-rata</label>
-<input type="number" step="0.01" name="ips_rata" class="form-control" required>
-</div>
-
-<div class="col-md-6">
-<label>IPS Akhir</label>
-<input type="number" step="0.01" name="ips_akhir" class="form-control" required>
-</div>
-
-<div class="col-md-6">
-<label>IPS Tren</label>
-<input type="number" step="0.01" name="ips_tren" class="form-control" required>
-</div>
-
-<div class="col-md-12">
-<label>Kehadiran</label>
-<select name="kehadiran" class="form-select" required>
-<option value="">Pilih</option>
-<option value="Tinggi">Tinggi</option>
-<option value="Sedang">Sedang</option>
-<option value="Rendah">Rendah</option>
-</select>
-</div>
-
-</div>
-
-<div class="d-grid mt-4">
-<button class="btn btn-success btn-lg">🔍 Prediksi</button>
-</div>
-</form>
-</div>
-</div>
-
-<!-- HASIL -->
-<div class="col-lg-6">
-<div class="result-box">
 
 {% if hasil %}
+<!-- ================= RESULT ================= -->
+<div class="result-card mt-4">
 
-<div class="section-title">Prediction Result</div>
-
-<!-- PREDIKSI UTAMA -->
-<div class="prediction-main {{ 'fail' if hasil != 'Lulus Tepat Waktu' }}">
-    <h6 class="mb-2">Status Kelulusan</h6>
-    <h2 class="{{ 'status-lulus' if hasil == 'Lulus Tepat Waktu' else 'status-tidak' }}">
-        {{ hasil }}
-    </h2>
-    <div class="confidence-note">
-        Hasil prediksi berdasarkan model Machine Learning
-    </div>
-</div>
-
-<!-- INPUT SNAPSHOT -->
-<div class="section-title mt-4">Input Summary</div>
-<div class="ai-card">
-
-    <div class="ai-metric">
-        <span>IPK</span><span>{{ ipk }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>MK Tidak Lulus</span><span>{{ mk_tidak_lulus }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>Jumlah Cuti</span><span>{{ cuti }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>Pekerjaan</span><span>{{ pekerjaan }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>Jumlah Semester</span><span>{{ semester }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>IPS Rata-rata</span><span>{{ ips_rata }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>IPS Akhir</span><span>{{ ips_akhir }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>IPS Tren</span><span>{{ ips_tren }}</span>
-    </div>
-    <div class="ai-metric">
-        <span>Kehadiran</span><span>{{ kehadiran }}</span>
+    <!-- HASIL UTAMA -->
+    <div class="prediction-main {% if hasil == 'Lulus Tepat Waktu' %}lulus{% else %}fail{% endif %}">
+        <h4 class="mb-2">🎯 Prediction Result</h4>
+        <h2 class="fw-bold">{{ hasil }}</h2>
     </div>
 
-</div>
+    <!-- INPUT SUMMARY -->
+    <div class="input-summary mt-4">
+        <h6 class="mb-3">📋 Data Mahasiswa</h6>
 
-<!-- PROBABILITAS -->
-<div class="section-title">Prediction Confidence</div>
+        <div class="row g-3 small">
+            <div class="col-md-6"><strong>IPK:</strong> {{ ipk }}</div>
+            <div class="col-md-6"><strong>MK Tidak Lulus:</strong> {{ mk_tidak_lulus }}</div>
 
-<div class="mb-3">
-    <small>Lulus Tepat Waktu</small>
-    <div class="progress">
-        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-             data-value="{{ prob_lulus }}">
-            {{ prob_lulus }}%
+            <div class="col-md-6"><strong>Jumlah Cuti:</strong> {{ cuti }}</div>
+            <div class="col-md-6"><strong>Pekerjaan:</strong> {{ pekerjaan }}</div>
+
+            <div class="col-md-6"><strong>Jumlah Semester:</strong> {{ semester }}</div>
+            <div class="col-md-6"><strong>Kehadiran:</strong> {{ kehadiran }}</div>
+
+            <div class="col-md-6"><strong>IPS Rata-rata:</strong> {{ ips_rata }}</div>
+            <div class="col-md-6"><strong>IPS Akhir:</strong> {{ ips_akhir }}</div>
+
+            <div class="col-md-12"><strong>IPS Tren:</strong> {{ ips_tren }}</div>
         </div>
     </div>
-</div>
 
-<div class="mb-2">
-    <small>Tidak Lulus Tepat Waktu</small>
-    <div class="progress">
-        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
-             data-value="{{ prob_tidak }}">
-            {{ prob_tidak }}%
+    <!-- PROBABILITY -->
+    <div class="progress-box mt-4">
+        <div class="progress-label">✅ Lulus Tepat Waktu ({{ prob_lulus }}%)</div>
+        <div class="progress">
+            <div class="progress-bar bar-lulus" data-value="{{ prob_lulus }}"></div>
+        </div>
+
+        <div class="progress-label mt-3">❌ Tidak Lulus Tepat Waktu ({{ prob_tidak }}%)</div>
+        <div class="progress">
+            <div class="progress-bar bar-tidak" data-value="{{ prob_tidak }}"></div>
         </div>
     </div>
-</div>
 
-<div class="confidence-note">
-    Probabilitas menunjukkan tingkat keyakinan model terhadap hasil prediksi
-</div>
-
-{% else %}
-<div class="placeholder-box">
-    <h6>📌 Hasil akan tampil di sini</h6>
-    <p>Silakan isi data dan jalankan prediksi</p>
 </div>
 {% endif %}
 
+<!-- ================= TAB ================= -->
+<div class="info-tabs mt-4">
+    <button class="info-tab active" onclick="showTab('about', event)">📌 Tentang</button>
+    <button class="info-tab" onclick="showTab('team', event)">👥 Tim</button>
 </div>
+
+<div class="tab-wrapper">
+    <div id="about" class="tab-content active">
+        <div class="about-card">
+            <h5>📌 Tentang Aplikasi</h5>
+            <p>
+Aplikasi ini merupakan <strong>sistem prediksi kelulusan mahasiswa</strong> yang dibangun menggunakan pendekatan 
+<strong>Machine Learning</strong> dengan metode <strong>Random Forest Classifier</strong>.
+</p>
+
+<p>
+Metode <strong>Random Forest</strong> adalah teknik <em>ensemble learning</em> yang terdiri dari 
+banyak <strong>Decision Tree (pohon keputusan)</strong>.  
+Setiap Decision Tree bekerja secara independen dalam menganalisis data mahasiswa berdasarkan 
+berbagai faktor akademik dan non-akademik, seperti:
+</p>
+
+<ul>
+    <li>IPK dan IPS</li>
+    <li>Tingkat kehadiran</li>
+    <li>Status cuti</li>
+    <li>Status pekerjaan</li>
+</ul>
+
+<p>
+Hasil prediksi akhir ditentukan melalui <strong>mekanisme voting mayoritas</strong> dari seluruh 
+Decision Tree dalam model. Pendekatan ini membuat sistem menjadi 
+<strong>lebih stabil, lebih akurat, dan tidak mudah mengalami overfitting</strong> 
+dibandingkan dengan penggunaan satu Decision Tree saja.
+</p>
+
+<p>
+Selain menampilkan hasil prediksi <strong>(Lulus / Tidak Lulus)</strong>, aplikasi ini juga 
+menyajikan <strong>tingkat probabilitas (%)</strong>, sehingga pengguna dapat memahami 
+tingkat keyakinan model terhadap hasil yang diberikan.
+</p>
+
+<p>
+Dengan menggunakan metode <strong>Random Forest</strong>, aplikasi ini mampu:
+</p>
+
+<ul>
+    <li>Mengolah data dengan karakteristik yang beragam</li>
+    <li>Menghasilkan prediksi yang lebih konsisten</li>
+    <li>Mendukung pengambilan keputusan akademik berbasis data</li>
+</ul>
+
+        </div>
+    </div>
+
+    <div id="team" class="tab-content">
+        <div class="team-card">
+            <h5>👥 Anggota Team</h5>
+            <div class="team-member"><img src="/static/img/anggota1.jpeg">Muhamad Nurul Awalin</div>
+            <div class="team-member"><img src="/static/img/anggota2.jpg">Alam Nurdin Fadillah</div>
+            <div class="team-member"><img src="/static/img/anggota3.jpg">Abdul Ropi</div>
+            <div class="team-member"><img src="/static/img/anggota4.jpg">Dasun Darmawan</div>
+            <div class="team-member"><img src="/static/img/anggota5.jpg">Imanuel Habalado</div>
+        </div>
+    </div>
 </div>
 
 </div>
 </div>
 
+<!-- ================= LOADING ================= -->
+<div id="loadingOverlay" class="loading-overlay d-none">
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <p>🧠 Menganalisis data...</p>
+    </div>
+</div>
+
+<!-- ================= SCRIPT ================= -->
 <script>
-document.querySelectorAll('.progress-bar').forEach(bar => {
-    const val = bar.getAttribute('data-value');
-    bar.style.width = val + '%';
+function showTab(tabId, event) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.info-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.target.classList.add('active');
+}
+
+document.getElementById("predictForm").addEventListener("submit", () => {
+    document.getElementById("loadingOverlay").classList.remove("d-none");
+});
+
+/* animasi progress bar (AMAN & RAPI) */
+window.addEventListener("load", () => {
+    document.querySelectorAll(".progress-bar").forEach(bar => {
+        const val = bar.dataset.value || 0;
+        bar.style.width = "0%";
+        setTimeout(() => {
+            bar.style.width = val + "%";
+        }, 400);
+    });
 });
 </script>
 

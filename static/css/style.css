@@ -1,0 +1,278 @@
+/* ================= GLOBAL ================= */
+body {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    min-height: 100vh;
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: #1f2937;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 360px;
+    background: #ffffff;
+    padding: 30px 25px;
+    border-right: 1px solid #e5e7eb;
+}
+
+/* ================= MAIN CONTENT ================= */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= HERO ================= */
+.hero {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #f8fafc;
+    padding: 45px;
+    border-radius: 22px;
+    margin-bottom: 30px;
+    animation: heroFade 0.8s ease-out;
+}
+
+.hero h1 {
+    font-weight: 700;
+}
+
+.hero p {
+    color: #e5e7eb;
+}
+
+@keyframes heroFade {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= CARD ================= */
+.result-card,
+.about-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+    animation: cardFade 0.6s ease;
+}
+
+@keyframes cardFade {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= TABS ================= */
+.info-tabs {
+    display: flex;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.info-tab {
+    padding: 10px 18px;
+    border-radius: 14px;
+    background: #e5e7eb;
+    border: none;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.info-tab.active {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #ffffff;
+}
+
+.info-tab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+
+/* ================= TAB CONTENT ================= */
+.tab-wrapper {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.tab-content {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+.tab-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    animation: tabFade 0.45s ease;
+}
+
+@keyframes tabFade {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= TEAM ================= */
+.team-card {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #f8fafc;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,.12);
+    padding: 10px 15px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    transition: all 0.25s ease;
+}
+
+.team-member:hover {
+    transform: translateX(6px);
+    background: rgba(255,255,255,.2);
+}
+
+.team-member img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,.6);
+}
+
+/* ================= FORM MICRO-INTERACTION ================= */
+input, select {
+    transition: all 0.25s ease;
+}
+
+input:focus, select:focus {
+    border-color: #334155;
+    box-shadow: 0 0 0 3px rgba(51,65,85,.25);
+    transform: scale(1.02);
+}
+
+input:valid, select:valid {
+    border-color: #10b981;
+}
+
+/* ================= BUTTON ================= */
+.btn-predict {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 14px;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-predict:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0,0,0,.3);
+}
+
+/* ================= PROGRESS BAR ================= */
+.progress {
+    height: 12px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    transition: width 1.8s ease;
+}
+
+/* LULUS */
+.bar-lulus {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+/* TIDAK LULUS */
+.bar-tidak {
+    background: linear-gradient(135deg, #f43f5e, #e11d48);
+}
+
+/* ================= STATUS ANIMATION ================= */
+.prediction-main {
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.prediction-main.lulus {
+    border: 2px solid #10b981;
+    animation: glowGreen 1.6s ease infinite alternate;
+}
+
+@keyframes glowGreen {
+    from { box-shadow: 0 0 10px rgba(16,185,129,.35); }
+    to   { box-shadow: 0 0 26px rgba(16,185,129,.65); }
+}
+
+.prediction-main.fail {
+    border: 2px solid #f43f5e;
+    animation: shake 0.45s ease;
+}
+
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-6px); }
+    50%  { transform: translateX(6px); }
+    75%  { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+
+/* ================= INPUT SUMMARY ================= */
+.input-summary {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 22px;
+    border: 1px solid #e5e7eb;
+}
+
+.input-summary h6 {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.input-summary strong {
+    color: #0f172a;
+}
+
+/* ================= LOADING ================= */
+.spinner {
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

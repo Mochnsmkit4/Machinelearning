@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sistem Prediksi Kelulusan Mahasiswa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:"Segoe UI",sans-serif;
+    background:linear-gradient(180deg,#1e293b,#334155);
+    color:#f8fafc;
+    overflow-x:hidden;
+}
+
+/* ===== HERO ===== */
+.hero{
+    padding:55px 20px 35px;
+    text-align:center;
+    position:relative;
+}
+
+.hero h1{
+    font-weight:800;
+    font-size:2.4rem;
+    animation:fadeDown 1s ease;
+}
+
+.hero p{
+    max-width:720px;
+    margin:14px auto 0;
+    color:#cbd5e1;
+    animation:fadeUp 1.2s ease;
+}
+
+/* ===== FLOATING ICONS ===== */
+.floating-icons i{
+    position:absolute;
+    font-size:2.2rem;
+    opacity:.15;
+    color:#e2e8f0;
+    animation:float 6s infinite ease-in-out;
+}
+
+.floating-icons i:nth-child(1){top:18%;left:10%}
+.floating-icons i:nth-child(2){top:62%;left:15%;animation-delay:1s}
+.floating-icons i:nth-child(3){top:22%;right:12%;animation-delay:2s}
+.floating-icons i:nth-child(4){top:66%;right:18%;animation-delay:3s}
+
+/* ===== PANEL ===== */
+.panel{
+    background:#f8fafc;
+    color:#0f172a;
+    border-radius:26px;
+    padding:35px;
+    margin-top:28px;
+    box-shadow:0 25px 45px rgba(15,23,42,.45);
+    animation:fadeUp 1.3s ease;
+}
+
+/* ===== STATS ===== */
+.stat{
+    text-align:center;
+}
+.stat i{
+    font-size:2.3rem;
+    color:#334155;
+}
+.stat h4{
+    margin-top:10px;
+    font-weight:800;
+}
+.stat span{
+    font-size:.9rem;
+    color:#475569;
+}
+
+/* ===== CHARACTER ===== */
+.character{
+    font-size:5.5rem;
+    text-align:center;
+    animation:bounce 2.5s infinite;
+}
+
+/* ===== BUTTON ===== */
+.btn-start{
+    background:linear-gradient(135deg,#1e293b,#334155);
+    border:none;
+    padding:14px 44px;
+    border-radius:999px;
+    font-weight:700;
+    color:#f8fafc;
+    box-shadow:0 15px 35px rgba(30,41,59,.55);
+    transition:.3s;
+}
+.btn-start:hover{
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 25px 50px rgba(30,41,59,.75);
+}
+
+/* ===== FOOTER ===== */
+footer{
+    padding:18px;
+    text-align:center;
+    font-size:.85rem;
+    color:#cbd5e1;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-18px)}
+}
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(25px)}
+    to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeDown{
+    from{opacity:0;transform:translateY(-25px)}
+    to{opacity:1;transform:translateY(0)}
+}
+@keyframes bounce{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="floating-icons">
+        <i class="bi bi-bar-chart-line"></i>
+        <i class="bi bi-mortarboard-fill"></i>
+        <i class="bi bi-cpu-fill"></i>
+        <i class="bi bi-clipboard-data"></i>
+    </div>
+
+    <h1>🎓 Sistem Prediksi Kelulusan Mahasiswa</h1>
+    <p>
+        Sistem berbasis <strong>Machine Learning</strong> untuk memprediksi  
+        <strong>kelulusan mahasiswa tepat waktu</strong>  
+        menggunakan data akademik & non-akademik.
+    </p>
+</section>
+
+<!-- CONTENT -->
+<div class="container">
+    <div class="panel">
+        <div class="row align-items-center g-4">
+            <div class="col-md-4 stat">
+                <i class="bi bi-journal-check"></i>
+                <h4>Akademik</h4>
+                <span>IPK, SKS, Kehadiran</span>
+            </div>
+            <div class="col-md-4 character">
+                👨‍🎓
+            </div>
+            <div class="col-md-4 stat">
+                <i class="bi bi-cpu"></i>
+                <h4>Machine Learning</h4>
+                <span>Model Prediksi Cerdas</span>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row g-4">
+            <div class="col-md-4 stat">
+                <i class="bi bi-people-fill"></i>
+                <h4>Mahasiswa</h4>
+                <span>Data non-akademik</span>
+            </div>
+            <div class="col-md-4 stat">
+                <i class="bi bi-graph-up-arrow"></i>
+                <h4>Akurasi</h4>
+                <span>Evaluasi Model</span>
+            </div>
+            <div class="col-md-4 stat">
+                <i class="bi bi-lightning-fill"></i>
+                <h4>Realtime</h4>
+                <span>Prediksi Cepat</span>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-start">
+                Mulai Prediksi
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    © 2026 • Kelompok 4 • Mata Kuliah Machine Learning
+</footer>
+
+</body>
+</html>

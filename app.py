@@ -12,11 +12,25 @@ encoder_pekerjaan = joblib.load("encoder_pekerjaan.pkl")
 encoder_kehadiran = joblib.load("encoder_kehadiran.pkl")
 
 
+# =========================
+# COVER PAGE
+# =========================
 @app.route("/")
+def cover():
+    return render_template("cover.html")
+
+
+# =========================
+# HALAMAN PREDIKSI (FORM)
+# =========================
+@app.route("/predict-page")
 def index():
     return render_template("index.html")
 
 
+# =========================
+# PROSES PREDIKSI
+# =========================
 @app.route("/predict", methods=["POST"])
 def predict():
 
@@ -70,18 +84,17 @@ def predict():
     # =========================
     proba = model.predict_proba(df)[0]
 
-    prob_tidak = round(proba[0] * 100, 2)  # class 0
-    prob_lulus = round(proba[1] * 100, 2)  # class 1
+    prob_tidak = round(proba[0] * 100, 2)
+    prob_lulus = round(proba[1] * 100, 2)
 
     # =========================
-    # KEPUTUSAN AKADEMIK
+    # KEPUTUSAN
     # =========================
-    THRESHOLD_LULUS = 60  # %
-
+    THRESHOLD_LULUS = 60
     hasil = "Lulus Tepat Waktu" if prob_lulus >= THRESHOLD_LULUS else "Tidak Lulus Tepat Waktu"
 
     # =========================
-    # KIRIM KE HTML
+    # KIRIM KE HALAMAN PREDIKSI
     # =========================
     return render_template(
         "index.html",
